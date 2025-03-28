@@ -1,0 +1,29 @@
+200 OK → Request successful.
+201 Created → Resource successfully created (e.g., user registered).
+
+=====================================
+
+4xx - Client Errors
+400 Bad Request → Invalid request syntax or parameters.
+
+401 Unauthorized → Authentication required (e.g., token missing).
+
+403 Forbidden → User authenticated but not authorized.
+
+404 Not Found → Resource does not exist.
+
+409 Conflict → Conflict in request (e.g., duplicate username).
+
+422 Unprocessable Entity → Validation errors (e.g., invalid input data).
+
+
+==============================
+
+5xx - Server Errors
+500 Internal Server Error → Generic server error.
+
+502 Bad Gateway → Server received an invalid response.
+
+503 Service Unavailable → Server temporarily down.
+
+504 Gateway Timeout → Server took too long to respond.
