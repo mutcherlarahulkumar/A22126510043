@@ -1,0 +1,42 @@
+.title{
+    display: flex;
+    justify-content: center;
+}
+
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+
+}
+
+.dataBoxes{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.main{
+    width: 90%;
+    padding: 100px;
+    background-color: aliceblue;
+
+}
+
+.calcButton{
+    background-color: rgb(99, 99, 240);
+    padding: 5px;
+}
+
+.clearText{
+    background-color: gray;
+    padding: 5px;
+}
+
+.title{
+    font-size: x-large;
+    font-weight: 800;
+}

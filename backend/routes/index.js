@@ -5,7 +5,8 @@ const { MaxHeap2, Deque } = require('../lib/max_heap2');
 
 const router = express();
 const heap = new MaxHeap(5);
-const AUTH_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzMTU0OTY0LCJpYXQiOjE3NDMxNTQ2NjQsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6Ijk0NDhjOWY3LWFhODgtNGJmNy1iOGRhLTE3NmY5ZjQzYjA3ZiIsInN1YiI6Im11dGNoZXJsYXJhaHVsa3VtYXIuMjIuY3NlQGFuaXRzLmVkdS5pbiJ9LCJjb21wYW55TmFtZSI6InN5bmNmaXNzaW9uIiwiY2xpZW50SUQiOiI5NDQ4YzlmNy1hYTg4LTRiZjctYjhkYS0xNzZmOWY0M2IwN2YiLCJjbGllbnRTZWNyZXQiOiJHaERGdUVLWVRSQnBxeGxaIiwib3duZXJOYW1lIjoicmFodWwiLCJvd25lckVtYWlsIjoibXV0Y2hlcmxhcmFodWxrdW1hci4yMi5jc2VAYW5pdHMuZWR1LmluIiwicm9sbE5vIjoiQTIyMTI2NTEwMDQzIn0.djyHLT-H5jtqRbrzTXNt2CyarEgAq96sHwUgif2MW54';
+
+const AUTH_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzNzQyMTAxLCJpYXQiOjE3NDM3NDE4MDEsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjI4YTAyN2Y0LWI3NTQtNDNjZi1hNDRhLWNkYjNjNWJjNTUxMCIsInN1YiI6Im11dGNoZXJsYXJhaHVsa3VtYXIuMjIuY3NlQGFuaXRzLmVkdS5pbiJ9LCJlbWFpbCI6Im11dGNoZXJsYXJhaHVsa3VtYXIuMjIuY3NlQGFuaXRzLmVkdS5pbiIsIm5hbWUiOiJyYWh1bCBrdW1hciIsInJvbGxObyI6ImEyMjEyNjUxMDA0MyIsImFjY2Vzc0NvZGUiOiJydENIWkoiLCJjbGllbnRJRCI6IjI4YTAyN2Y0LWI3NTQtNDNjZi1hNDRhLWNkYjNjNWJjNTUxMCIsImNsaWVudFNlY3JldCI6IlJDcWFSaHhSWmNyV0RabVYifQ.VHNmle5qox-vt_26EyeCIG4vkdpPHOp40flIQfAPnUY';
 
 router.get('/health', (req, res) => {
     console.log("The router is Working fine and we are good to go..");
@@ -13,7 +14,7 @@ router.get('/health', (req, res) => {
 });
 
 async function fetchUsers() {
-    const response = await fetch('http://20.244.56.144/test/users', {
+    const response = await fetch('http://20.244.56.144/evaluation-service/users', {
         method: 'GET',
         headers: {
             'Authorization': AUTH_TOKEN,
@@ -26,7 +27,7 @@ async function fetchUsers() {
 }
 
 async function fetchPosts(userId) {
-    const response = await fetch(`http://20.244.56.144/test/users/${userId}/posts`, {
+    const response = await fetch(`http://20.244.56.144/evaluation-service/users/${userId}/posts`, {
         method: 'GET',
         headers: {
             'Authorization': AUTH_TOKEN,
@@ -42,15 +43,27 @@ async function processUsers() {
     const users = await fetchUsers();
     for (const userId in users) {
         const username = users[userId];
-        const postCount = await fetchPosts(userId);
-        heap.insert({ userId, username, postCount });
+        const posts = await fetchPosts(userId);
+        const totalCount = 0;
+        for(const postId in posts){
+            const commentCount = await fetchComments(postId);
+            totalCount+=commentCount
+        }
+        heap.insert({ userId, username, totalCount });
     }
     console.log("Top Users by Post Count:", heap.getTopUsers());
     return heap.getTopUsers();
 }
 
+// setInterval(await processUsers(),30min)
+// .then(storeinmyDb)
+
+
+//  Dealing with data
+
 router.get('/users', async (req, res) => {
-    const data = await processUsers();
+    const getData = fetchdate forom my server
+    
     res.json({ topUsers: data });
 });
 
@@ -61,7 +74,7 @@ const latestPostsDeque = new Deque(5);
 
 const fetchUsersAndPosts = async () => {
     try {
-        const userResponse = await fetch('http://20.244.56.144/test/users', {
+        const userResponse = await fetch('http://20.244.56.144/evaluation-service/users', {
             method: 'GET',
             headers: {
                 'Authorization': AUTH_TOKEN,
@@ -78,7 +91,7 @@ const fetchUsersAndPosts = async () => {
         });
 
         const postRequests = [...usersMap.keys()].map(async (userId) => {
-            const postResponse = await fetch(`http://20.244.56.144/test/users/${userId}/posts`, {
+            const postResponse = await fetch(`http://20.244.56.144/evaluation-service/users/${userId}/posts`, {
                 method: 'GET',
                 headers: {
                     'Authorization': AUTH_TOKEN,

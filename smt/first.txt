@@ -1,0 +1,19 @@
+4 apis
+
+CRUD
+
+Expense tracker 
+
+name
+description
+category
+sub category
+date
+
+in Read
+
+1. filter based on date (interval)
+2. filter based on category and subcategory
+
+category -> travel
+subcategory -> Car,Bus,

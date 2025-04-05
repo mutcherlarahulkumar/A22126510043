@@ -1,0 +1,15 @@
+.content{
+    display: flex;
+}
+
+.inputDiv{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.displayDiv{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
